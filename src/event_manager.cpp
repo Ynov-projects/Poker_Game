@@ -16,7 +16,7 @@ void EventManager::processEvents()
                 // Miser un dixième
                 break;
             case SDLK_q:
-                // Quitte la partie
+                // Se coucher
                 break;
             case SDLK_SPACE:
                 // Continue la partie sans mise

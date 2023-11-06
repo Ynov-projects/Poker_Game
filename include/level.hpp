@@ -4,6 +4,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "render_window.hpp"
+#include "card.hpp"
 
 class Level
 {
@@ -16,4 +17,5 @@ class Level
     private:
         RenderWindow &window;
         Mix_Music* music;
+        std::vector<Card> cards;
 };
