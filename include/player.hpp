@@ -7,9 +7,10 @@
 class Player
 {
     public:
-        Player(){};
-        ~Player(){std::cout << "Player détruit" << std::endl;};
+        Player()
+        {};
+        ~Player();
         std::vector<Card> cards;
-    
+
     private:
 };

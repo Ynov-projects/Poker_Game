@@ -6,7 +6,7 @@
 #include "player.hpp"
 #include "utils.hpp"
 
-Level::Level( RenderWindow &window, Mix_Music* music) : window(window)
+Level::Level( RenderWindow &window, Mix_Music* music, Player &_player) : window(window), player(_player)
 {
     int secs = utils::hireTimeInMilliSeconds();
     char valeurs[14] = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'};
@@ -28,7 +28,7 @@ Level::Level( RenderWindow &window, Mix_Music* music) : window(window)
         int index = secs%allCards.size();
         Card card = allCards[index];
         allCards.erase(allCards.begin() + index);
-        card.move(x + 20 * i, WINDOW_HEIGHT / 2 + CARD_HEIGHT);
+        card.move(x + 20 * i, WINDOW_HEIGHT / 2 + CARD_HEIGHT * 2);
         player.cards.push_back(card);
     }
 
@@ -56,17 +56,23 @@ Level::~Level()
 
 void Level::update()
 {
-
+    // if(player.getAction() == 1){
+    //     nextTurn();
+    // }
 }
 
 void Level::render(RenderWindow &window)
 {
-    for(Card card : cards)
+    for(Card card : player.cards)
     {
         window.render(card);
     }
-    for(Card card : player.cards)
+    // Si on est au 2ème tour
+    int cardNumber = turn == 1 ? 2 : turn <= 2 ? 1 : 0;
+
+    for(int i = 0; i < cards.size() - cardNumber; i++)
     {
+        Card card = cards[i];
         window.render(card);
     }
 }

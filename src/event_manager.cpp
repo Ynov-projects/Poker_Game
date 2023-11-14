@@ -4,6 +4,7 @@ void EventManager::processEvents()
 {
     while (SDL_PollEvent(&event))
     {
+        folded = false;
         switch (event.type)
         {
         case SDL_QUIT:
@@ -20,6 +21,7 @@ void EventManager::processEvents()
                 break;
             case SDLK_SPACE:
                 // Continue la partie sans mise
+                folded = true;
                 break;
             }
             break;

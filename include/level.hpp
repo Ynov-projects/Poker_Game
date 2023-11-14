@@ -10,16 +10,18 @@
 class Level
 {
     public:
-        Level(RenderWindow &window, Mix_Music* music);
+        Level(RenderWindow &window, Mix_Music* music, Player & player);
         ~Level();
         void update();
         void render(RenderWindow &window);
-        Player getPlayer(){return player;};
         std::vector<Card> getCards(){return cards;};
+        int getTurn(){return turn;};
+        void nextTurn(){turn++;};
     
     private:
         RenderWindow &window;
         Mix_Music* music;
         std::vector<Card> cards;
         Player player;
+        int turn = 1;
 };

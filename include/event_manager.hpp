@@ -10,8 +10,10 @@ public:
     void processEvents();
 
     bool isGameRunning() const { return gameRunning; }
+    bool isFolded() const { return folded; }
 
 private:
     SDL_Event event; // Structure qui contient le type d'évènement et ses données associées
     bool gameRunning{true};
+    bool folded{true};
 };
