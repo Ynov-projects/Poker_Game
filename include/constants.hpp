@@ -11,7 +11,7 @@ constexpr int SCALE_FACTOR = 4;
 
 constexpr int CARD_WIDTH = 16;
 constexpr int CARD_HEIGHT = 24;
-constexpr char* CARDS_PATH = "../../res/gfx/cards";
+constexpr char* CARDS_PATH = "../../res/gfx/cards/";
 
 constexpr float GRAVITY = 1.0f;
 constexpr float JUMP_FORCE = 10.0f;

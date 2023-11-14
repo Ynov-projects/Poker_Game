@@ -2,9 +2,15 @@
 #include <SDL2/SDL_mixer.h>
 #include "game.hpp"
 
-// Initialise SDL2 et SDL2_image
 bool initSDL()
 {
+    // Initialisation de SDL Audio
+    if (SDL_Init(SDL_INIT_AUDIO) < 0)
+    {
+        std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
     // Initialisation de SDL2
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -19,14 +25,6 @@ bool initSDL()
         SDL_Quit();
         return false;
     }
-
-        // Initialisation de SDL Audio
-    if (SDL_Init(SDL_INIT_AUDIO) < 0)
-    {
-        std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-        return false;
-    }
-
 
     // Initialisation de SDL_mixer
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)

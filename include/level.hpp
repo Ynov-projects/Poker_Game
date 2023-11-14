@@ -5,6 +5,7 @@
 
 #include "render_window.hpp"
 #include "card.hpp"
+#include "player.hpp"
 
 class Level
 {
@@ -13,9 +14,12 @@ class Level
         ~Level();
         void update();
         void render(RenderWindow &window);
+        Player getPlayer(){return player;};
+        std::vector<Card> getCards(){return cards;};
     
     private:
         RenderWindow &window;
         Mix_Music* music;
         std::vector<Card> cards;
+        Player player;
 };

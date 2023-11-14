@@ -10,4 +10,9 @@ namespace utils
         t *= 0.001f; // Convertit le temps en secondes
         return t;
     }
+    inline float hireTimeInMilliSeconds() // Retourne le temps depuis le lancement du programme en secondes
+    {
+        float t = SDL_GetTicks(); // Récupère le temps depuis le lancement du programme en millisecondes
+        return t;
+    }
 }
