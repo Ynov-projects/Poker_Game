@@ -9,7 +9,7 @@ Game::Game()
       timeStep(TIME_STEP),
       window(),
       eventManager(),
-      player(),
+      player(eventManager),
       level(window, loadMusic(LEVEL_MUSIC_PATH), player),
       updateManager(eventManager, level),
       renderManager(window, level)

@@ -8,6 +8,7 @@
 
 Level::Level( RenderWindow &window, Mix_Music* music, Player &_player) : window(window), player(_player)
 {
+    turn = 1;
     int secs = utils::hireTimeInMilliSeconds();
     char valeurs[14] = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'};
     char sigles[4] = {'c', 'k', 't', 'p'};
@@ -29,7 +30,7 @@ Level::Level( RenderWindow &window, Mix_Music* music, Player &_player) : window(
         Card card = allCards[index];
         allCards.erase(allCards.begin() + index);
         card.move(x + 20 * i, WINDOW_HEIGHT / 2 + CARD_HEIGHT * 2);
-        player.cards.push_back(card);
+        player.addCards(card);
     }
 
     // Permet de donner les cartes qui seront le flop / le turn / la river
@@ -56,23 +57,36 @@ Level::~Level()
 
 void Level::update()
 {
-    // if(player.getAction() == 1){
+    // player.update();
+    // if(player.getAction() == 'T'){
     //     nextTurn();
     // }
 }
 
 void Level::render(RenderWindow &window)
 {
-    for(Card card : player.cards)
+    for(Card card : player.getCards())
     {
         window.render(card);
     }
     // Si on est au 2ème tour
-    int cardNumber = turn == 1 ? 2 : turn <= 2 ? 1 : 0;
-
+    int cardNumber = 0;
+    switch(turn){
+        case 1:
+            cardNumber = 5;
+            break;
+        case 2:
+            cardNumber = 2;
+            break;
+        case 3:
+            cardNumber = 1;
+            break;
+    }
+    std::cout << turn << " " << cards.size() << " " << cardNumber << std::endl;
     for(int i = 0; i < cards.size() - cardNumber; i++)
     {
         Card card = cards[i];
         window.render(card);
+        std::cout << i <<std::endl;
     }
 }
