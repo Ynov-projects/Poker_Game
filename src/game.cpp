@@ -3,6 +3,8 @@
 #include "utils.hpp"
 #include "constants.hpp"
 
+#include <iostream>
+
 // Constructeur
 Game::Game()
     : currentTime(utils::hireTimeInSeconds()),
@@ -31,7 +33,10 @@ void Game::run()
         float frameTime = newTime - currentTime;
         currentTime = newTime;
         accumulator += frameTime;
-        eventManager.processEvents(); // Gestion des événements
+        eventManager.processEvents(newTime); // Gestion des événements
+        if(player.action() == 'F'){
+            level.nextTurn();
+        }
         while (accumulator >= timeStep)
         {
             updateManager.update();

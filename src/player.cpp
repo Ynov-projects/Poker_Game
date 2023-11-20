@@ -16,6 +16,14 @@ void Player::addCards(Card card){
     cards.push_back(card);
 }
 
-// void Player::update(){
-//     action = eventManager.isFolded() ? 'T' : 'O';
-// }
+void Player::update(){
+
+}
+
+char Player::action(){
+    if(eventManager.isFolded()){
+        return 'F';
+    }else{
+        return '0';
+    }
+}

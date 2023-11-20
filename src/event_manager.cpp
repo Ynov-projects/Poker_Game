@@ -1,30 +1,50 @@
 #include "event_manager.hpp"
 
-void EventManager::processEvents()
+#include <iostream>
+
+void EventManager::processEvents(int newTime)
 {
-    while (SDL_PollEvent(&event))
-    {
-        folded = false;
-        switch (event.type)
+    if(newTime - lastKeyDownInSec > 2){
+        while (SDL_PollEvent(&event))
         {
-        case SDL_QUIT:
-            gameRunning = false;
-            break;
-        case SDL_KEYDOWN:
-            switch (event.key.keysym.sym)
+            switch (event.type)
             {
-            case SDLK_d:
-                // Miser un dixième
+            case SDL_QUIT:
+                gameRunning = false;
                 break;
-            case SDLK_q:
-                // Se coucher
-                break;
-            case SDLK_SPACE:
-                // Continue la partie sans mise
-                folded = true;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_z:
+                        // moveUp = true; // Active le mouvement vers le haut
+                        break;
+                    case SDLK_q:
+                        // moveLeft = true; // Active le mouvement vers la gauche
+                        break;
+                    case SDLK_s:
+                        // moveDown = true; // Active le mouvement vers le bas
+                        break;
+                    case SDLK_d:
+                        // moveRight = true; // Active le mouvement vers la droite
+                        break;
+                    case SDLK_SPACE:
+                        std::cout << "keydown : " << keydown << std::endl;
+                        if(keydown == false){
+                            folded = true; // Indique que la barre d'espace a été enfoncée
+                            keydown = true;
+                            lastKeyDownInSec = newTime;
+                        }
+                        break;
+                }
                 break;
             }
-            break;
         }
+    }else{
+        folded = false; // Indique que la barre d'espace a été enfoncée
+        keydown = false;
     }
+}
+
+void EventManager::fold(){
+    folded = false;
 }

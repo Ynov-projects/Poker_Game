@@ -12,11 +12,11 @@ class Player
         ~Player();
         std::vector<Card> getCards(){return cards;};
         void addCards(Card card);
-        //char getAction(){return action;};
-        //void update();
+        // char getAction(){return action;};
+        void update();
+        char action();
 
     private:
         EventManager &eventManager;
-        std::vector<Card> cards;
-        //char action;
+        std::vector<Card> cards{};
 };

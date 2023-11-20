@@ -16,7 +16,7 @@ class Level
         void render(RenderWindow &window);
         std::vector<Card> getCards(){return cards;};
         int getTurn(){return turn;};
-        void nextTurn(){turn++;};
+        void nextTurn(){turn++;std::cout << "coucou" << std::endl;};
     
     private:
         RenderWindow &window;

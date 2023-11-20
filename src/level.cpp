@@ -57,10 +57,7 @@ Level::~Level()
 
 void Level::update()
 {
-    // player.update();
-    // if(player.getAction() == 'T'){
-    //     nextTurn();
-    // }
+    
 }
 
 void Level::render(RenderWindow &window)
@@ -82,11 +79,10 @@ void Level::render(RenderWindow &window)
             cardNumber = 1;
             break;
     }
-    std::cout << turn << " " << cards.size() << " " << cardNumber << std::endl;
+    // std::cout << turn << " " << cards.size() << " " << cardNumber << std::endl;
     for(int i = 0; i < cards.size() - cardNumber; i++)
     {
         Card card = cards[i];
         window.render(card);
-        std::cout << i <<std::endl;
     }
 }
