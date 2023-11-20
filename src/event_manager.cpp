@@ -15,36 +15,37 @@ void EventManager::processEvents(int newTime)
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym)
                 {
-                    case SDLK_z:
-                        // moveUp = true; // Active le mouvement vers le haut
+                    case SDLK_f:
+                        folding = true; // Quitte la main
+                        lastKeyDownInSec = newTime;
                         break;
-                    case SDLK_q:
-                        // moveLeft = true; // Active le mouvement vers la gauche
-                        break;
-                    case SDLK_s:
-                        // moveDown = true; // Active le mouvement vers le bas
-                        break;
-                    case SDLK_d:
-                        // moveRight = true; // Active le mouvement vers la droite
+                    case SDLK_b:
+                        bidding = true; // Mise 10% de la somme restante
+                        lastKeyDownInSec = newTime;
                         break;
                     case SDLK_SPACE:
-                        std::cout << "keydown : " << keydown << std::endl;
-                        if(keydown == false){
-                            folded = true; // Indique que la barre d'espace a été enfoncée
-                            keydown = true;
-                            lastKeyDownInSec = newTime;
-                        }
+                        checking = true; // Continue la main
+                        lastKeyDownInSec = newTime;
                         break;
                 }
                 break;
             }
         }
     }else{
-        folded = false; // Indique que la barre d'espace a été enfoncée
-        keydown = false;
+        folding = false;
+        bidding = false;
+        checking = false;
     }
 }
 
-void EventManager::fold(){
-    folded = false;
+char EventManager::action(){
+    if(folding){
+        return 'F';
+    }else if(checking){
+        return 'C';
+    }else if(bidding){
+        return 'B';
+    }
+
+    return 'W';
 }

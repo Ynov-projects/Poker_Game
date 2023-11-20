@@ -21,9 +21,5 @@ void Player::update(){
 }
 
 char Player::action(){
-    if(eventManager.isFolded()){
-        return 'F';
-    }else{
-        return '0';
-    }
+    return eventManager.action();
 }

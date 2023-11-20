@@ -34,7 +34,7 @@ void Game::run()
         currentTime = newTime;
         accumulator += frameTime;
         eventManager.processEvents(newTime); // Gestion des événements
-        if(player.action() == 'F'){
+        if(player.action() == 'C'){
             level.nextTurn();
         }
         while (accumulator >= timeStep)

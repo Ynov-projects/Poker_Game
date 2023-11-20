@@ -1,0 +1,1 @@
+g++ -g src/*.cpp -o bin/debug/Poker_Game -IC:/SDL2/include -Iinclude -LC:/SDL2/lib -w -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -mconsole

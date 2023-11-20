@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cards">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/res/gfx/cards.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -6,21 +6,22 @@ class EventManager
 {
 public:
     EventManager(){
-        folded = false;
-        keydown = false;
+        checking = false;
+        folding = false;
+        bidding = false;
         lastKeyDownInSec = 0;
     };
     ~EventManager() = default; // Destructeur avec liste d'initialisation vide
     void processEvents(int newTime);
-    void fold();
 
     bool isGameRunning() const { return gameRunning; }
-    bool isFolded() const { return folded; }
+    char action();
 
 private:
     SDL_Event event; // Structure qui contient le type d'évènement et ses données associées
     bool gameRunning{1};
-    bool keydown;
-    bool folded;
+    bool checking = false;
+    bool folding = false;
+    bool bidding = false;
     int lastKeyDownInSec;
 };
