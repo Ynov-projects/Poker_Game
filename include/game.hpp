@@ -23,6 +23,6 @@ private:
     EventManager eventManager;
     UpdateManager updateManager;
     RenderManager renderManager;
-    Level level;
     Player player;
+    Level level;
 };

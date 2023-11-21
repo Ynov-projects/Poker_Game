@@ -11,10 +11,10 @@ Game::Game()
       timeStep(TIME_STEP),
       window(),
       eventManager(),
-      player(eventManager),
-      level(window, loadMusic(LEVEL_MUSIC_PATH), player),
       updateManager(eventManager, level),
-      renderManager(window, level)
+      renderManager(window, level),
+      player(eventManager),
+      level(window, loadMusic(LEVEL_MUSIC_PATH), player)
 {}
 
 // Destructeur
