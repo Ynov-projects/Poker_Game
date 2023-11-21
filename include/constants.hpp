@@ -13,6 +13,10 @@ constexpr int CARD_WIDTH = 16;
 constexpr int CARD_HEIGHT = 24;
 constexpr char* CARDS_PATH = "../../res/gfx/cards/";
 
+constexpr int COIN_WIDTH = 4;
+constexpr int COIN_HEIGHT = 4;
+constexpr char* COIN_PATH = "../../res/gfx/coin.png";
+
 constexpr float GRAVITY = 1.0f;
 constexpr float JUMP_FORCE = 10.0f;
 

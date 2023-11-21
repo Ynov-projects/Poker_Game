@@ -12,11 +12,12 @@ class Player
         ~Player();
         std::vector<Card> getCards(){return cards;};
         void addCards(Card card);
-        // char getAction(){return action;};
-        void update();
         char action();
+        void addCoins(int _coins){coins += _coins;};
+        void removeCoins(int _coins){coins -= _coins;};
 
     private:
         EventManager &eventManager;
         std::vector<Card> cards{};
+        int coins = 0;
 };

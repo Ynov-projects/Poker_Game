@@ -16,10 +16,6 @@ void Player::addCards(Card card){
     cards.push_back(card);
 }
 
-void Player::update(){
-
-}
-
 char Player::action(){
     return eventManager.action();
 }
