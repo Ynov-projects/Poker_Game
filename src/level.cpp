@@ -85,5 +85,10 @@ void Level::render(RenderWindow &window)
         Card card = cards[i];
         window.render(card);
     }
-    Entity coin = Entity(Vector2f(12,30), window.loadTexture(COIN_PATH), COIN_WIDTH, COIN_HEIGHT, std::make_pair(0, 0));
+    for(int i = 0; i <= player.getCoins(); i++){
+        int j = i / 5;
+        std::cout << i << " " << j << std::endl;
+        Entity coin = Entity(Vector2f(250 - i%5 * 20, 160 - j*20), window.loadTexture(COIN_PATH), COIN_WIDTH, COIN_HEIGHT, std::make_pair(0, 0));
+        window.render(coin);
+    }
 }

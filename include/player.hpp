@@ -15,9 +15,10 @@ class Player
         char action();
         void addCoins(int _coins){coins += _coins;};
         void removeCoins(int _coins){coins -= _coins;};
+        int getCoins(){return coins;};
 
     private:
         EventManager &eventManager;
         std::vector<Card> cards{};
-        int coins = 0;
+        int coins = 5;
 };
