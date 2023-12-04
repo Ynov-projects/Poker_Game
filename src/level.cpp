@@ -11,6 +11,15 @@
 
 Level::Level( RenderWindow &window, Mix_Music* music, Player _player) : window(window), player(_player), enemy(5)
 {
+    resetGame();
+    // Joue la musique en boucle car le second paramètre est égal à -1
+    if (Mix_PlayMusic(music, -1) == -1)
+    {
+        std::cerr << "Failed to play music! SDL_mixer Error: " << Mix_GetError() << std::endl;
+    }
+}
+
+void Level::resetGame(){
     turn = 1;
     int secs = utils::hireTimeInMilliSeconds();
     char valeurs[14] = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'};
@@ -53,12 +62,6 @@ Level::Level( RenderWindow &window, Mix_Music* music, Player _player) : window(w
         card.move(x + 20 * i, WINDOW_HEIGHT / 2 + CARD_HEIGHT * 2);
         enemy.addCards(card);
     }
-
-    // Joue la musique en boucle car le second paramètre est égal à -1
-    if (Mix_PlayMusic(music, -1) == -1)
-    {
-        std::cerr << "Failed to play music! SDL_mixer Error: " << Mix_GetError() << std::endl;
-    }
 }
 
 Level::~Level()
@@ -78,25 +81,18 @@ void Level::render(RenderWindow &window)
     {
         window.render(card);
     }
+
     // Si on est au 2ème tour
-    int cardNumber = 0;
-    switch(turn){
-        case 1:
-            cardNumber = 5;
-            break;
-        case 2:
-            cardNumber = 2;
-            break;
-        case 3:
-            cardNumber = 1;
-            break;
+    if(turn >= 2){
+        window.render(cards[0]);
+        window.render(cards[1]);
+        window.render(cards[2]);
+        if(turn >= 3) {
+            window.render(cards[3]);
+            if(turn == 4) window.render(cards[4]);
+        }
     }
-    // std::cout << turn << " " << cards.size() << " " << cardNumber << std::endl;
-    for(int i = 0; i < cards.size() - cardNumber; i++)
-    {
-        Card card = cards[i];
-        window.render(card);
-    }
+
     for(int i = 0; i < player.getCoins(); i++){
         int j = i / 5;
         Entity coin = Entity(Vector2f(250 - i%5 * 20, 160 - j*20), window.loadTexture(COIN_PATH), COIN_WIDTH, COIN_HEIGHT, std::make_pair(0, 0));

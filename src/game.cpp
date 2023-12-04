@@ -26,6 +26,7 @@ Game::~Game()
 
 int Game::run()
 {
+    Player playerLevel = level.getPlayer();
     while (eventManager.isGameRunning())
     {
         // Calcul des frames de logique de jeu par rapport aux frames de rendu
@@ -38,20 +39,23 @@ int Game::run()
         // Gestion des différentes actions faites par le joueur
         if(level.check()){
             std::cout << "coucou on check" << std::endl;
-            if(level.nextTurn()==4){
-                bool reussi = level.testAllCombinations(level.getEnemy().getCards()) > level.testAllCombinations(level.getPlayer().getCards()); 
-                std::cout << reussi << std::endl;
-                // return 2; // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
-            }
-        
+            if(level.getTurn() < 4) level.nextTurn();
         }else if(level.bid()){
             std::cout << "gros bide" << std::endl;
             if(!level.removeCoins()){
-                return 1; // Le jeu est terminé, car le joueur n'a plus de pièces
+                return 0; // Le jeu est terminé, car le joueur n'a plus de pièces
             }
         }else if(level.fold()){
             std::cout << "oh le fold" << std::endl;
-            return 2; // Une nouvelle partie peut reprendre
+            runAgain(); // Une nouvelle partie peut reprendre
+        }else if(level.nextGame()){
+            if(level.getTurn()==4){
+                bool reussi = level.testAllCombinations(level.getEnemy().getCards()) > level.testAllCombinations(playerLevel.getCards()); 
+                if(reussi){
+                    playerLevel.addCoins(playerLevel.getPlayedCoins() * 2);
+                }
+                runAgain(); // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
+            }
         }
 
         while (accumulator >= timeStep)
@@ -63,21 +67,6 @@ int Game::run()
 
         renderManager.render();
     }
-}
-
-int Game::valueToBeat(){
-    int secs = utils::hireTimeInMilliSeconds();
-    std::cout << secs << std::endl;
-    if(secs%701)return 10;
-    if(secs%401)return 9;
-    if(secs%301)return 8;
-    if(secs%101)return 7;
-    if(secs%51)return 6;
-    if(secs%25)return 5;
-    if(secs%15)return 4;
-    if(secs%5)return 3;
-    if(secs%3)return 2;
-    return 1;
 }
 
 void Game::cleanUp()
@@ -96,4 +85,9 @@ Mix_Music* Game::loadMusic(const char* filePath)
         std::cerr << "Failed to load music! SDL_mixer Error: " << Mix_GetError() << std::endl;
     }
     return music;
+}
+
+void Game::runAgain(){
+    level.resetGame();
+    run();
 }

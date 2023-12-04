@@ -45,7 +45,7 @@ int runGame()
         return 1;
 
     Game game; // Crée une instance du jeu avec les constantes globales
-    game.run(); // Exécute le jeu
+    std::cout << game.run() << std::endl; // Exécute le jeu
 
     return 0;
 }

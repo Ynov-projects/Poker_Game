@@ -15,6 +15,8 @@ class Level
         ~Level();
         void update();
         void render(RenderWindow &window);
+        void resetGame();
+
         std::vector<Card> getCards(){return cards;};
         int getTurn(){return turn;};
         int nextTurn(){return turn++;};
@@ -24,6 +26,7 @@ class Level
         bool check(){return player.action() == 'c';};
         bool fold(){return player.action() == 'f';};
         bool bid(){return player.action() == 'b';};
+        bool nextGame(){return player.action() == 'n';};
         bool removeCoins(){return player.removeCoins();};
 
         int testAllCombinations(std::vector<Card> playerCards);

@@ -9,6 +9,7 @@ public:
         checking = false;
         folding = false;
         bidding = false;
+        nextGame = false;
         lastKeyDownInSec = 0;
     };
     ~EventManager() = default; // Destructeur avec liste d'initialisation vide
@@ -17,6 +18,7 @@ public:
     bool getFolding(){return folding;};
     bool getBidding(){return bidding;};
     bool getChecking(){return checking;};
+    bool getNextGame(){return nextGame;};
 
 private:
     SDL_Event event; // Structure qui contient le type d'évènement et ses données associées
@@ -24,5 +26,6 @@ private:
     bool checking = false;
     bool folding = false;
     bool bidding = false;
+    bool nextGame = false;
     int lastKeyDownInSec;
 };

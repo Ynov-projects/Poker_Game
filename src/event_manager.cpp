@@ -23,6 +23,10 @@ void EventManager::processEvents(int newTime)
                         bidding = true; // Mise 10% de la somme restante
                         lastKeyDownInSec = newTime;
                         break;
+                    case SDLK_n:
+                        nextGame = true; // Continue la main
+                        lastKeyDownInSec = newTime;
+                        break;
                     case SDLK_SPACE:
                         checking = true; // Continue la main
                         lastKeyDownInSec = newTime;
@@ -35,5 +39,6 @@ void EventManager::processEvents(int newTime)
         folding = false;
         bidding = false;
         checking = false;
+        nextGame = false;
     }
 }

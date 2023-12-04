@@ -13,8 +13,8 @@ public:
     Game();
     ~Game();
     int run();
-    int valueToBeat();
     Mix_Music* loadMusic(const char* filePath);
+    void runAgain();
 
 private:
     void cleanUp();
@@ -26,4 +26,5 @@ private:
     RenderManager renderManager;
     Player player;
     Level level;
+    int statusLevel{};
 };
