@@ -13,7 +13,7 @@ Game::Game()
       eventManager(),
       updateManager(eventManager, level),
       renderManager(window, level),
-      player(eventManager),
+      player(eventManager, 3),
       level(window, loadMusic(LEVEL_MUSIC_PATH), player)
 {}
 
@@ -24,7 +24,7 @@ Game::~Game()
 }
 
 
-void Game::run()
+int Game::run()
 {
     while (eventManager.isGameRunning())
     {
@@ -33,10 +33,27 @@ void Game::run()
         float frameTime = newTime - currentTime;
         currentTime = newTime;
         accumulator += frameTime;
-        eventManager.processEvents(newTime); // Gestion des événements
-        if(player.action() == 'C'){
-            level.nextTurn();
+        eventManager.processEvents(newTime);
+
+        // Gestion des différentes actions faites par le joueur
+        if(level.check()){
+            std::cout << "coucou on check" << std::endl;
+            if(level.nextTurn()==4){
+                bool reussi = level.testAllCombinations(level.getEnemy().getCards()) > level.testAllCombinations(level.getPlayer().getCards()); 
+                std::cout << reussi << std::endl;
+                // return 2; // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
+            }
+        
+        }else if(level.bid()){
+            std::cout << "gros bide" << std::endl;
+            if(!level.removeCoins()){
+                return 1; // Le jeu est terminé, car le joueur n'a plus de pièces
+            }
+        }else if(level.fold()){
+            std::cout << "oh le fold" << std::endl;
+            return 2; // Une nouvelle partie peut reprendre
         }
+
         while (accumulator >= timeStep)
         {
             updateManager.update();
@@ -48,6 +65,20 @@ void Game::run()
     }
 }
 
+int Game::valueToBeat(){
+    int secs = utils::hireTimeInMilliSeconds();
+    std::cout << secs << std::endl;
+    if(secs%701)return 10;
+    if(secs%401)return 9;
+    if(secs%301)return 8;
+    if(secs%101)return 7;
+    if(secs%51)return 6;
+    if(secs%25)return 5;
+    if(secs%15)return 4;
+    if(secs%5)return 3;
+    if(secs%3)return 2;
+    return 1;
+}
 
 void Game::cleanUp()
 {

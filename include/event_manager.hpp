@@ -13,9 +13,10 @@ public:
     };
     ~EventManager() = default; // Destructeur avec liste d'initialisation vide
     void processEvents(int newTime);
-
     bool isGameRunning() const { return gameRunning; }
-    char action();
+    bool getFolding(){return folding;};
+    bool getBidding(){return bidding;};
+    bool getChecking(){return checking;};
 
 private:
     SDL_Event event; // Structure qui contient le type d'évènement et ses données associées

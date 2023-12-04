@@ -37,15 +37,3 @@ void EventManager::processEvents(int newTime)
         checking = false;
     }
 }
-
-char EventManager::action(){
-    if(folding){
-        return 'F';
-    }else if(checking){
-        return 'C';
-    }else if(bidding){
-        return 'B';
-    }
-
-    return 'W';
-}

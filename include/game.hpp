@@ -12,7 +12,8 @@ class Game
 public:
     Game();
     ~Game();
-    void run();
+    int run();
+    int valueToBeat();
     Mix_Music* loadMusic(const char* filePath);
 
 private:
