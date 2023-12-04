@@ -36,23 +36,29 @@ int Game::run()
         accumulator += frameTime;
         eventManager.processEvents(newTime);
 
+        if(level.getTurn() == 1 && level.getPlayer().getCoins() == 0) return 0;
+
         // Gestion des différentes actions faites par le joueur
         if(level.check()){
-            std::cout << "coucou on check" << std::endl;
             if(level.getTurn() < 4) level.nextTurn();
+
         }else if(level.bid()){
-            std::cout << "gros bide" << std::endl;
-            if(!level.removeCoins()){
-                return 0; // Le jeu est terminé, car le joueur n'a plus de pièces
-            }
+            level.removeCoins(4-level.getTurn());
+
         }else if(level.fold()){
-            std::cout << "oh le fold" << std::endl;
+            std::cout << level.getFlatPlayedCoins() << std::endl;
+            level.addCoins(level.getFlatPlayedCoins() / 2);
             runAgain(); // Une nouvelle partie peut reprendre
+
         }else if(level.nextGame()){
             if(level.getTurn()==4){
-                bool reussi = level.testAllCombinations(level.getEnemy().getCards()) > level.testAllCombinations(playerLevel.getCards()); 
-                if(reussi){
-                    playerLevel.addCoins(playerLevel.getPlayedCoins() * 2);
+                int enemyScore = level.testAllCombinations(level.getEnemy().getCards());
+                int playerScore = level.testAllCombinations(playerLevel.getCards());
+
+                if(enemyScore < playerScore){
+                    level.addCoins(level.getPlayedCoins());
+                }else if(enemyScore == playerScore){
+                    level.addCoins(level.getFlatPlayedCoins());
                 }
                 runAgain(); // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
             }

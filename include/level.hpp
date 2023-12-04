@@ -27,7 +27,12 @@ class Level
         bool fold(){return player.action() == 'f';};
         bool bid(){return player.action() == 'b';};
         bool nextGame(){return player.action() == 'n';};
-        bool removeCoins(){return player.removeCoins();};
+
+        void removeCoins(int _coins){player.removeCoins(_coins);};
+        void addCoins(int _coins){player.addCoins(_coins);};
+        int getFlatPlayedCoins(){return player.getFlatPlayedCoins();};
+        int getPlayedCoins(){return player.getPlayedCoins();};
+        int getCoins(){return player.getCoins();};
 
         int testAllCombinations(std::vector<Card> playerCards);
         int testColor(std::vector<Card> _cards);

@@ -14,12 +14,13 @@ class Player
         void addCards(Card card);
         char action();
         void addCoins(int coinNumber); // Limite de pièces fixé à 20
-        bool removeCoins();
+        void removeCoins(int _coins);
         int getCoins(){return coins;};
         int getPlayedCoins(){return playedCoins;};
+        int getFlatPlayedCoins(){return flatPlayedCoins;};
 
     private:
         EventManager &eventManager;
         std::vector<Card> cards{};
-        int coins, playedCoins;
+        int coins, playedCoins, flatPlayedCoins;
 };

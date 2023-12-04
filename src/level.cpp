@@ -24,7 +24,7 @@ void Level::resetGame(){
     int secs = utils::hireTimeInMilliSeconds();
     char valeurs[14] = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'};
     char sigles[4] = {'c', 'k', 't', 'p'};
-    std::vector<Card> allCards;
+    std::vector<Card> allCards{};
     for(int i = 0; i < sizeof(valeurs) - 1; i++)
     {
         for(int j = 0; j < sizeof(sigles); j++){
@@ -44,7 +44,7 @@ void Level::resetGame(){
         card.move(x + 20 * i, WINDOW_HEIGHT / 2 + CARD_HEIGHT * 2);
         player.addCards(card);
     }
-
+    cards = {};
     // Permet de donner les cartes qui seront le flop / le turn / la river
     for(int i = 0; i < 5; i++){
         int index = secs%allCards.size();
