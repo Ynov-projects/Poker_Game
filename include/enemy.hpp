@@ -8,7 +8,7 @@ class Enemy
 {
     public:
         Enemy(int _coins){coins = _coins;};
-        ~Enemy();
+        ~Enemy(){};
         std::vector<Card> getCards(){return cards;};
         void addCards(Card card);
         void addCoins(){coins += coins == 20 ? 0 : 1;}; // Limite de pièces fixé à 20

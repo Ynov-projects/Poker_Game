@@ -19,6 +19,11 @@ class Player
         int getPlayedCoins(){return playedCoins;};
         int getFlatPlayedCoins(){return flatPlayedCoins;};
 
+        bool check(){return eventManager.getChecking();};
+        bool fold(){return eventManager.getFolding();};
+        bool bid(){return eventManager.getBidding();};
+        bool nextGame(){return eventManager.getNextGame();};
+
     private:
         EventManager &eventManager;
         std::vector<Card> cards{};

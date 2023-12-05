@@ -6,10 +6,6 @@
 #include "enemy.hpp"
 #include "event_manager.hpp"
 
-Enemy::~Enemy(){
-    std::cout << "destroyed" << std::endl;
-}
-
 void Enemy::addCards(Card card){
     cards.push_back(card);
 }
