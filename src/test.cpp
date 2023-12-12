@@ -38,7 +38,7 @@ int Test::testColor(std::vector<Card> _cards){
             }
             return royal > 1 ? 10 : 9;                      // Ici une quinte flush royale ou une quinte flush
         }
-        return 4;                                           // Ici une couleur
+        return 6;                                           // Ici une couleur
     }
     return 0;                                               // Pas de couleur
 }
