@@ -45,7 +45,7 @@ int Game::run()
 
         }else if(player.fold()){
             player.addCoins(player.getFlatPlayedCoins() / 2);
-            runAgain(); // Une nouvelle partie peut reprendre
+            if(runAgain()) return 0; // Une nouvelle partie peut reprendre
 
         }else if(player.nextGame()){
             if(level.getTurn()==4){
@@ -59,7 +59,7 @@ int Game::run()
                     player.addCoins(player.getFlatPlayedCoins());
                 }
                 player.addCoins(0);
-                runAgain(); // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
+                if(runAgain()) return 0; // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
             }
         }
 
@@ -67,7 +67,6 @@ int Game::run()
         {
             updateManager.update();
             accumulator -= timeStep;
-            
         }
 
         renderManager.render();
