@@ -2,6 +2,7 @@
 #include "game.hpp"
 #include "utils.hpp"
 #include "constants.hpp"
+#include "test.hpp"
 
 #include <iostream>
 
@@ -13,7 +14,7 @@ Game::Game()
       eventManager(),
       updateManager(eventManager, level),
       renderManager(window, level),
-      player(eventManager, 3),
+      player(eventManager, 7),
       level(window, loadMusic(LEVEL_MUSIC_PATH), player)
 {}
 
@@ -26,7 +27,6 @@ Game::~Game()
 
 int Game::run()
 {
-    Player& playerLevel = level.getPlayer();
     while (eventManager.isGameRunning())
     {
         // Calcul des frames de logique de jeu par rapport aux frames de rendu
@@ -36,29 +36,29 @@ int Game::run()
         accumulator += frameTime;
         eventManager.processEvents(newTime);
 
-        if(level.getTurn() == 1 && playerLevel.getCoins() == 0) return 0;
-
         // Gestion des différentes actions faites par le joueur
-        if(playerLevel.check()){
+        if(player.check()){
             if(level.getTurn() < 4) level.nextTurn();
 
-        }else if(playerLevel.bid()){
-            playerLevel.removeCoins(4-level.getTurn());
+        }else if(player.bid()){
+            if(level.getTurn() < 4) player.removeCoins(4-level.getTurn());
 
-        }else if(playerLevel.fold()){
-            playerLevel.addCoins(playerLevel.getFlatPlayedCoins() / 2);
+        }else if(player.fold()){
+            player.addCoins(player.getFlatPlayedCoins() / 2);
             runAgain(); // Une nouvelle partie peut reprendre
 
-        }else if(playerLevel.nextGame()){
+        }else if(player.nextGame()){
             if(level.getTurn()==4){
-                int enemyScore = level.testAllCombinations(level.getEnemy().getCards());
-                int playerScore = level.testAllCombinations(playerLevel.getCards());
+                Test test;
+                int enemyScore = test.testAllCombinations(level.getEnemy().getCards(), level.getCards());
+                int playerScore = test.testAllCombinations(player.getCards(), level.getCards());
 
                 if(enemyScore < playerScore){
-                    playerLevel.addCoins(playerLevel.getPlayedCoins());
+                    player.addCoins(player.getPlayedCoins());
                 }else if(enemyScore == playerScore){
-                    playerLevel.addCoins(playerLevel.getFlatPlayedCoins());
+                    player.addCoins(player.getFlatPlayedCoins());
                 }
+                player.addCoins(0);
                 runAgain(); // Une nouvelle partie peut reprendre mais calcul des scores et des gains d'abord
             }
         }
@@ -92,7 +92,51 @@ Mix_Music* Game::loadMusic(const char* filePath)
     return music;
 }
 
-void Game::runAgain(){
-    level.resetGame();
+int Game::runAgain(){
+    if(player.getCoins() == 0) return 0;
+
+    int secs = utils::hireTimeInMilliSeconds();
+    char valeurs[14] = {'a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'};
+    char sigles[4] = {'c', 'k', 't', 'p'};
+    std::vector<Card> allCards{};
+    for(int i = 0; i < sizeof(valeurs) - 1; i++)
+    {
+        for(int j = 0; j < sizeof(sigles); j++){
+        allCards.push_back(
+            Card(Vector2f(-400, -300), window.loadTexture((CARDS_PATH + std::string(1, valeurs[i]) + sigles[j] + ".png").c_str()), std::make_pair(0, 0), j + 1, i + 1)
+        );
+        }
+    }
+
+    int x = WINDOW_WIDTH / 2 - CARD_WIDTH * 3;
+    
+    // Distribution des cartes au joueur
+    for(int i = 0; i < 2; i++){
+        int index = secs%allCards.size();
+        Card card = allCards[index];
+        allCards.erase(allCards.begin() + index);
+        card.move(x + 20 * (i-3), WINDOW_HEIGHT / 2 + CARD_HEIGHT * 2);
+        player.addCards(card);
+    }
+
+    std::vector<Card> gameCards, enemyCards{};
+    // Permet de donner les cartes qui seront le flop / le turn / la river
+    for(int i = 0; i < 5; i++){
+        int index = secs%allCards.size();
+        Card card = allCards[index];
+        allCards.erase(allCards.begin() + index);
+        card.move(x + 20 * i, WINDOW_HEIGHT / 2 - CARD_HEIGHT / 2);
+        gameCards.push_back(card);
+    }
+
+    // Distribution des cartes au enemy
+    for(int i = 0; i < 2; i++){
+        int index = secs%allCards.size();
+        Card card = allCards[index];
+        allCards.erase(allCards.begin() + index);
+        card.move(x + 20 * (i+1), WINDOW_HEIGHT / 2 + CARD_HEIGHT * 2);
+        enemyCards.push_back(card);
+    }
+    level.resetGame(gameCards, enemyCards);
     run();
 }

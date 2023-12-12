@@ -12,7 +12,10 @@ class Player
         ~Player();
         std::vector<Card> getCards(){return cards;};
         void addCards(Card card);
+        void clearCards(){cards = {};};
+
         char action();
+
         void addCoins(int coinNumber); // Limite de pièces fixé à 20
         void removeCoins(int _coins);
         int getCoins(){return coins;};

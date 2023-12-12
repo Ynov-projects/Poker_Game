@@ -14,7 +14,7 @@ public:
     ~Game();
     int run();
     Mix_Music* loadMusic(const char* filePath);
-    void runAgain();
+    int runAgain();
 
 private:
     void cleanUp();

@@ -39,6 +39,6 @@ void Player::removeCoins(int _coins){
 
 void Player::addCoins(int coinNumber){
     coins += coinNumber;
-    coins -= coins >= 20 ? coins - 20 : 0;
+    coins -= coins >= 50 ? coins - 50 : 0;
     playedCoins = 0; flatPlayedCoins = 0;
 }

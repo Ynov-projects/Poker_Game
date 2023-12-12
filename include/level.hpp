@@ -11,11 +11,11 @@
 class Level
 {
     public:
-        Level(RenderWindow &window, Mix_Music* music, Player player);
+        Level(RenderWindow &window, Mix_Music* music, Player& player);
         ~Level();
         void update();
         void render(RenderWindow &window);
-        void resetGame();
+        void resetGame(std::vector<Card> gameCards, std::vector<Card> enemyCards);
 
         std::vector<Card> getCards(){return cards;};
         int getTurn(){return turn;};
@@ -23,17 +23,11 @@ class Level
         Player& getPlayer(){return player;};
         Enemy& getEnemy(){return enemy;};
 
-        int testAllCombinations(std::vector<Card> playerCards);
-        int testColor(std::vector<Card> _cards);
-        int testQuinte(std::vector<Card> _cards, bool color);
-        int testOtherPair(int value, std::vector<Card> _cards);
-        std::vector<int> mostRepeatedValues(std::vector<Card> _cards);
-    
     private:
         RenderWindow &window;
         Mix_Music* music;
         std::vector<Card> cards;
-        Player player;
+        Player& player;
         Enemy enemy;
         int turn = 1;
 };

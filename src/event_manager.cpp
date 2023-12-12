@@ -4,7 +4,7 @@
 
 void EventManager::processEvents(int newTime)
 {
-    if(newTime - lastKeyDownInSec > 2){
+    if(newTime - lastKeyDownInSec > 1){
         while (SDL_PollEvent(&event))
         {
             switch (event.type)
